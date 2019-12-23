@@ -53,6 +53,38 @@ void scrPrintLn(char *fgColor, char *bgColor, char *format, ...){
     printf("\n");
 }
 
+void scrPrintCoord (int x, int y, char *format, ...){
+    va_list v1;
+    char buffer[1024];
+
+    va_start(v1, format);
+    vsnprintf(buffer, sizeof(buffer), format, v1);
+    printf("\033[%d;%dH%s", x, y, buffer);
+    va_end(v1);
+}
+
+void scrPrintCoordColored (char *fgColor, char *bgColor, int x, int y, char *format, ...){
+    va_list v1;
+    char buffer[1024];
+
+    va_start(v1, format);
+    vsnprintf(buffer, sizeof(buffer), format, v1);
+    
+    if(fgColor != NULL)
+        scrSetCor(fgColor);
+
+    if(bgColor != NULL)
+        scrSetCor(bgColor);
+    
+    printf("\033[%d;%dH%s", x, y, buffer);
+
+    if(fgColor != NULL || bgColor != NULL)
+        scrRstCor();
+        
+    va_end(v1);
+}
+
+
 void *threadLoad(void *param){
     TH_LOAD_ARGS *thArgs;
     thArgs = (TH_LOAD_ARGS *) param;

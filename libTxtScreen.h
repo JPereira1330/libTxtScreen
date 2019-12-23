@@ -94,6 +94,10 @@ void scrPrint(char *fgColor, char *bgColor, char *format, ...);
 */
 void scrPrintLn(char *fgColor, char *bgColor, char *format, ...);
 
+void scrPrintCoord (int x, int y, char *format, ...);
+
+void scrPrintCoordColored (char *fgColor, char *bgColor, int x, int y, char *format, ...);
+
 int scrLoad(char *titulo, CB_SCRLOAD cbScrLoad);
 
 #endif //MAP_H
