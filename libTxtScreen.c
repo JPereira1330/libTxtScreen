@@ -80,10 +80,48 @@ void scrPrintCoordColored (char *fgColor, char *bgColor, int x, int y, char *for
 
     if(fgColor != NULL || bgColor != NULL)
         scrRstCor();
-        
+
     va_end(v1);
 }
 
+void scrDrawnRect(int x, int y, int width, int height){
+	int i, i2;
+	for (i2 = 0; i2 < height; i2++) {
+		for (i = 0; i < width; i++) {
+
+            if(i2 == 0 && i == 0){
+			    printf("\033[%d;%dH%c", y + i2, x + i,RECT_SUP_ESQ);
+                continue;
+            }
+
+            if(i2 == 0 && i == width-1){
+			    printf("\033[%d;%dH%c", y + i2, x + i,RECT_SUP_DIR);
+                continue;
+            }
+
+            if(i2 == height-1 && i == 0){
+			    printf("\033[%d;%dH%c", y + i2, x + i,RECT_INF_ESQ);
+                continue;
+            }
+
+            if(i2 == height-1 && i == width-1){
+			    printf("\033[%d;%dH%c", y + i2, x + i,RECT_INF_DIR);
+                continue;
+            }
+
+            printf("\033[%d;%dH.", y + i2, x + i);
+		}
+	}
+}
+
+void scrDrawnRectFill(int x, int y, int width, int height, char background){
+	int i, i2;
+	for (i2 = 0; i2 < height; i2++) {
+		for (i = 0; i < width; i++) {
+			printf("\033[%d;%dH%c", y + i2, x + i, background);
+		}
+	}
+}
 
 void *threadLoad(void *param){
     TH_LOAD_ARGS *thArgs;
